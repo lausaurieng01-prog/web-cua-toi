@@ -1,245 +1,819 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Thư viện số cá nhân của Đỗ Thành Long - sinh viên FPT Polytechnic.">
-<title>Thư viện số | Đỗ Thành Long</title>
+<title>Digital Library | Đậu Đăng Hưng</title>
+
 <style>
-:root{
- --bg:#f4f7ff;--surface:#ffffff;--surface2:#edf2ff;--text:#17213b;--muted:#68738d;
- --primary:#6558f5;--secondary:#00b8a9;--accent:#ff9f43;--border:rgba(101,88,245,.14);
- --shadow:0 18px 50px rgba(38,49,94,.10);--nav:rgba(255,255,255,.82);
+:root {
+    --bg: #f4f7fb;
+    --card: #ffffff;
+    --text: #172033;
+    --muted: #64748b;
+    --accent: #6366f1;
+    --accent2: #06b6d4;
+    --border: #e2e8f0;
 }
-body.dark{
- --bg:#0b1020;--surface:#141c31;--surface2:#1b2742;--text:#edf2ff;--muted:#a5b0ca;
- --primary:#9a8cff;--secondary:#42dbc9;--accent:#ffc078;--border:rgba(154,140,255,.2);
- --shadow:0 18px 50px rgba(0,0,0,.28);--nav:rgba(20,28,49,.86);
+
+.dark {
+    --bg: #0b1120;
+    --card: #111b2e;
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+    --border: #25334a;
 }
-*{box-sizing:border-box;margin:0;padding:0;scroll-behavior:smooth}
-body{font-family:Inter,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;transition:background .35s,color .35s}
-a{color:inherit;text-decoration:none}
-button,input{font:inherit}
-.container{width:min(1160px,92%);margin:auto}
-header{position:sticky;top:0;z-index:50;background:var(--nav);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
-.navbar{height:74px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.3px}
-.brand-mark{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;color:white;background:linear-gradient(135deg,var(--primary),var(--secondary));box-shadow:0 8px 20px #6558f544}
-.nav-links{display:flex;gap:20px;align-items:center}
-.nav-links a{font-size:.9rem;color:var(--muted);font-weight:650;transition:.2s}
-.nav-links a:hover{color:var(--primary)}
-.actions{display:flex;gap:9px;align-items:center}
-.icon-btn,.menu-btn{border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:12px;padding:9px 12px;cursor:pointer;transition:.25s}
-.icon-btn:hover,.menu-btn:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
-.menu-btn{display:none}
-.hero{position:relative;overflow:hidden;padding:92px 0 76px}
-.hero:before,.hero:after{content:"";position:absolute;border-radius:50%;filter:blur(2px);pointer-events:none}
-.hero:before{width:390px;height:390px;background:radial-gradient(circle,#6558f533,transparent 68%);top:-130px;right:-80px}
-.hero:after{width:300px;height:300px;background:radial-gradient(circle,#00b8a922,transparent 70%);bottom:-130px;left:-100px}
-.hero-grid{position:relative;display:grid;grid-template-columns:1.25fr .75fr;gap:45px;align-items:center}
-.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:7px 13px;border-radius:30px;background:var(--surface2);color:var(--primary);font-size:.82rem;font-weight:800;margin-bottom:20px}
-.dot{width:8px;height:8px;background:var(--secondary);border-radius:50%;box-shadow:0 0 0 5px #00b8a922}
-h1{font-size:clamp(2.5rem,6vw,4.8rem);line-height:1.07;letter-spacing:-2.5px;margin-bottom:22px}
-.gradient{background:linear-gradient(100deg,var(--primary),var(--secondary));-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero p{color:var(--muted);font-size:1.08rem;max-width:650px;margin-bottom:28px}
-.btn-row{display:flex;flex-wrap:wrap;gap:12px}
-.btn{display:inline-flex;align-items:center;gap:9px;padding:12px 18px;border-radius:13px;font-weight:800;border:1px solid var(--border);transition:.25s}
-.btn.primary{background:linear-gradient(110deg,var(--primary),#8876ff);color:white;border:0;box-shadow:0 12px 25px #6558f533}
-.btn.secondary{background:var(--surface);color:var(--text)}
-.btn:hover{transform:translateY(-4px)}
-.profile-card{position:relative;background:linear-gradient(145deg,var(--surface),var(--surface2));border:1px solid var(--border);border-radius:28px;padding:30px;box-shadow:var(--shadow);animation:float 5s ease-in-out infinite}
-.avatar{width:112px;height:112px;margin:0 auto 18px;border-radius:30px;display:grid;place-items:center;font-size:2.5rem;font-weight:950;color:white;background:linear-gradient(135deg,#6558f5,#00b8a9);transform:rotate(-5deg);box-shadow:0 16px 35px #6558f544}
-.profile-card h2{text-align:center;font-size:1.45rem}
-.profile-card .sub{text-align:center;color:var(--muted);margin:3px 0 22px}
-.info-line{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-top:1px solid var(--border);font-size:.92rem}
-.info-line span:first-child{color:var(--muted)}
-.section{padding:76px 0;scroll-margin-top:82px}
-.section.alt{background:var(--surface2)}
-.section-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:30px}
-.kicker{color:var(--primary);font-size:.78rem;font-weight:900;text-transform:uppercase;letter-spacing:1.6px}
-h2.section-title{font-size:clamp(1.8rem,4vw,2.7rem);line-height:1.2;margin-top:7px}
-.section-desc{color:var(--muted);max-width:600px;margin-top:9px}
-.search-wrap{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:10px 14px;min-width:min(280px,100%)}
-.search-wrap input{width:100%;border:0;outline:0;background:transparent;color:var(--text)}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:23px;box-shadow:0 8px 25px rgba(30,40,80,.04);transition:transform .28s,box-shadow .28s;position:relative;overflow:hidden}
-.card:before{content:"";position:absolute;width:100px;height:100px;border-radius:50%;background:var(--primary);opacity:.06;right:-35px;top:-35px}
-.card:hover{transform:translateY(-7px);box-shadow:var(--shadow)}
-.card-icon{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;font-size:1.45rem;background:var(--surface2);margin-bottom:17px}
-.card h3{font-size:1.12rem;margin-bottom:7px}
-.card p{font-size:.92rem;color:var(--muted);margin-bottom:16px}
-.card-link{color:var(--primary);font-weight:850;font-size:.9rem}
-.tag-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
-.tag{font-size:.74rem;padding:5px 9px;border-radius:20px;background:var(--surface2);color:var(--muted);font-weight:700}
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center}
-.about-panel{background:var(--surface);padding:28px;border-radius:22px;border:1px solid var(--border)}
-.about-panel p{color:var(--muted);margin-top:12px}
-.skill{margin-top:18px}
-.skill-top{display:flex;justify-content:space-between;font-size:.9rem;font-weight:750;margin-bottom:7px}
-.track{height:9px;background:var(--surface2);border-radius:20px;overflow:hidden}
-.fill{height:100%;width:0;border-radius:20px;background:linear-gradient(90deg,var(--primary),var(--secondary));transition:width 1.3s ease}
-.timeline{border-left:2px solid var(--border);padding-left:22px;margin-left:8px}
-.timeline-item{position:relative;padding:0 0 24px}
-.timeline-item:before{content:"";position:absolute;width:12px;height:12px;border-radius:50%;background:var(--secondary);left:-29px;top:7px;box-shadow:0 0 0 5px var(--surface2)}
-.timeline-item small{color:var(--primary);font-weight:850}
-.timeline-item p{color:var(--muted);font-size:.92rem;margin-top:4px}
-.quote{padding:30px;border-radius:22px;background:linear-gradient(120deg,#6558f5,#1eaaa5);color:white;font-size:1.25rem;font-weight:750;box-shadow:0 18px 40px #6558f533}
-.quote small{display:block;font-size:.85rem;font-weight:500;opacity:.8;margin-top:12px}
-.contact-box{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:32px;border:1px solid var(--border);border-radius:24px;background:var(--surface)}
-footer{padding:28px 0;color:var(--muted);font-size:.88rem;text-align:center;border-top:1px solid var(--border)}
-#topBtn{position:fixed;right:22px;bottom:22px;width:46px;height:46px;border:0;border-radius:15px;background:var(--primary);color:white;font-size:1.2rem;box-shadow:var(--shadow);cursor:pointer;opacity:0;pointer-events:none;transform:translateY(12px);transition:.25s;z-index:40}
-#topBtn.show{opacity:1;pointer-events:auto;transform:translateY(0)}
-.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s,transform .7s}
-.reveal.visible{opacity:1;transform:translateY(0)}
-.no-results{display:none;color:var(--muted);padding:22px;text-align:center;grid-column:1/-1}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-@media(max-width:900px){.nav-links{display:none;position:absolute;top:74px;left:0;right:0;background:var(--surface);padding:18px 4%;border-bottom:1px solid var(--border);flex-direction:column;align-items:flex-start}.nav-links.open{display:flex}.menu-btn{display:inline-block}.hero-grid{grid-template-columns:1fr}.profile-card{max-width:440px}.grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:620px){.hero{padding:65px 0 55px}.grid,.about-grid{grid-template-columns:1fr}.section{padding:58px 0}.section-head{align-items:flex-start;flex-direction:column}.search-wrap{width:100%}.contact-box{align-items:flex-start;flex-direction:column}h1{letter-spacing:-1.5px}}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.4s, color 0.4s;
+    overflow-x: hidden;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(15px);
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    border-bottom: 1px solid var(--border);
+}
+
+nav {
+    max-width: 1200px;
+    margin: auto;
+    padding: 18px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--accent);
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+}
+
+.nav-links a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--accent);
+}
+
+#themeBtn {
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text);
+    padding: 10px 14px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.hero {
+    max-width: 1200px;
+    margin: auto;
+    padding: 100px 24px 70px;
+}
+
+.hero-tag {
+    color: var(--accent2);
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-size: clamp(40px, 6vw, 76px);
+    line-height: 1.1;
+    margin-bottom: 24px;
+}
+
+.gradient {
+    background: linear-gradient(90deg, #6366f1, #06b6d4);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.hero p {
+    max-width: 700px;
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 17px;
+}
+
+.hero-buttons {
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 14px 22px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: white;
+}
+
+.btn-outline {
+    border: 1px solid var(--border);
+    color: var(--text);
+}
+
+.btn:hover {
+    transform: translateY(-4px);
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 50px;
+}
+
+.stat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 25px;
+    border-radius: 20px;
+}
+
+.stat h3 {
+    font-size: 30px;
+    color: var(--accent);
+}
+
+.stat p {
+    color: var(--muted);
+    margin-top: 10px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 30px 24px 100px;
+}
+
+.section {
+    margin-top: 80px;
+    scroll-margin-top: 100px;
+}
+
+.section-title {
+    font-size: 34px;
+    margin-bottom: 15px;
+}
+
+.section-desc {
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 30px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 22px;
+}
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px;
+    transition: 0.35s;
+}
+
+.card:hover {
+    transform: translateY(-7px);
+    border-color: var(--accent);
+    box-shadow: 0 15px 40px rgba(99,102,241,0.10);
+}
+
+.icon {
+    font-size: 32px;
+    margin-bottom: 18px;
+}
+
+.card h3 {
+    margin-bottom: 14px;
+    font-size: 20px;
+}
+
+.card p, .card li {
+    color: var(--muted);
+    line-height: 1.8;
+}
+
+.card ul {
+    padding-left: 20px;
+}
+
+.timeline {
+    border-left: 2px solid var(--accent);
+    padding-left: 25px;
+}
+
+.timeline-item {
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.timeline-item::before {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: var(--accent);
+    border-radius: 50%;
+    left: -32px;
+    top: 5px;
+}
+
+.timeline-item h3 {
+    margin-bottom: 10px;
+}
+
+.timeline-item p {
+    color: var(--muted);
+    line-height: 1.8;
+}
+
+.resource a {
+    display: inline-block;
+    margin-top: 15px;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.resource a:hover {
+    text-decoration: underline;
+}
+
+.quote {
+    background: linear-gradient(135deg, #6366f1, #06b6d4);
+    padding: 40px;
+    border-radius: 25px;
+    color: white;
+    line-height: 1.8;
+}
+
+footer {
+    text-align: center;
+    padding: 35px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s, transform 0.8s;
+}
+
+.reveal.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #6366f1, #06b6d4);
+    width: 0;
+    z-index: 200;
+}
+
+@media (max-width: 800px) {
+    .nav-links {
+        display: none;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .hero {
+        padding-top: 60px;
+    }
+}
 </style>
 </head>
+
 <body>
+
+<div class="progress-bar" id="progressBar"></div>
+
 <header>
- <div class="container navbar">
-  <a class="brand" href="#home"><span class="brand-mark">DL</span><span>LONG<span class="gradient">.LIBRARY</span></span></a>
-  <nav class="nav-links" id="navLinks" aria-label="Mục lục chính">
-   <a href="#home">Trang chủ</a><a href="#about">Giới thiệu</a><a href="#library">Thư viện</a><a href="#skills">Kỹ năng</a><a href="#projects">Dự án</a><a href="#contact">Liên hệ</a>
-  </nav>
-  <div class="actions"><button class="icon-btn" id="themeBtn" aria-label="Đổi giao diện">🌙</button><button class="menu-btn" id="menuBtn" aria-label="Mở menu">☰</button></div>
- </div>
+<nav>
+    <div class="logo">DH. Library</div>
+
+    <ul class="nav-links">
+        <li><a href="#home">Trang chủ</a></li>
+        <li><a href="#profile">Hồ sơ</a></li>
+        <li><a href="#roadmap">Lộ trình</a></li>
+        <li><a href="#ai">AI</a></li>
+        <li><a href="#programming">Lập trình</a></li>
+        <li><a href="#projects">Dự án</a></li>
+        <li><a href="#resources">Tài nguyên</a></li>
+    </ul>
+
+    <button id="themeBtn">🌙 Chế độ tối</button>
+</nav>
 </header>
 
-<main>
+<!-- TRANG CHỦ -->
 <section class="hero" id="home">
- <div class="container hero-grid">
-  <div class="reveal">
-   <div class="eyebrow"><span class="dot"></span> DIGITAL LIBRARY • FPT STUDENT</div>
-   <h1>Chào mừng đến với<br><span class="gradient">không gian tri thức</span></h1>
-   <p>Mỗi kiến thức là một viên gạch xây nên tương lai. Đây là thư viện số cá nhân, nơi mình lưu trữ hành trình học tập, khám phá công nghệ và phát triển bản thân trong những năm tháng sinh viên.</p>
-   <div class="btn-row"><a class="btn primary" href="#library">Khám phá thư viện <span>↗</span></a><a class="btn secondary" href="#about">Về mình</a></div>
-  </div>
-  <aside class="profile-card reveal">
-   <div class="avatar">ĐTL</div>
-   <h2>Đỗ Thành Long</h2><div class="sub">Sinh viên năm nhất • FPT Polytechnic</div>
-   <div class="info-line"><span>Mã sinh viên</span><strong>PK04904</strong></div>
-   <div class="info-line"><span>Vai trò</span><strong>Người học & sáng tạo</strong></div>
-   <div class="info-line"><span>Định hướng</span><strong>Công nghệ thông tin</strong></div>
-   <div class="info-line"><span>Phương châm</span><strong>Học hỏi mỗi ngày</strong></div>
-  </aside>
- </div>
+    <div class="hero-tag">PERSONAL KNOWLEDGE SYSTEM</div>
+
+    <h1>
+        Khám phá tri thức.<br>
+        <span class="gradient">Xây dựng tương lai.</span>
+    </h1>
+
+    <p>
+        Chào mừng đến với thư viện số cá nhân của Đậu Đăng Hưng.
+        Đây là không gian lưu trữ kiến thức, ý tưởng, dự án và
+        hành trình phát triển của một sinh viên đang bước vào
+        thế giới công nghệ và trí tuệ nhân tạo.
+    </p>
+
+    <div class="hero-buttons">
+        <a href="#roadmap" class="btn btn-primary">Khám phá hành trình →</a>
+        <a href="#resources" class="btn btn-outline">Kho tài nguyên</a>
+    </div>
+
+    <div class="stats">
+        <div class="stat">
+            <h3>01</h3>
+            <p>Năm học khám phá</p>
+        </div>
+
+        <div class="stat">
+            <h3>AI</h3>
+            <p>Định hướng tương lai</p>
+        </div>
+
+        <div class="stat">
+            <h3>∞</h3>
+            <p>Không giới hạn tri thức</p>
+        </div>
+    </div>
 </section>
 
-<section class="section" id="about">
- <div class="container">
-  <div class="section-head"><div><div class="kicker">01 / About me</div><h2 class="section-title">Hành trình của Long</h2><p class="section-desc">Một góc nhỏ giới thiệu bản thân, mục tiêu và những điều mình đang theo đuổi.</p></div></div>
-  <div class="about-grid">
-   <div class="about-panel reveal"><h3>Xin chào, mình là Thành Long! 👋</h3><p>Mình là sinh viên năm nhất tại FPT Polytechnic. Mình xây dựng thư viện này để hệ thống hóa kiến thức, lưu lại tài liệu hữu ích và theo dõi sự tiến bộ của bản thân. Mình tin rằng học tập hiệu quả không chỉ là ghi nhớ, mà còn là biết kết nối kiến thức và biến chúng thành sản phẩm thực tế.</p><p>Mục tiêu trước mắt là nắm chắc nền tảng lập trình, rèn tư duy giải quyết vấn đề và tự tin tham gia các dự án học tập.</p></div>
-   <div class="about-panel reveal"><h3>Những điều đang học</h3>
-    <div class="skill"><div class="skill-top"><span>HTML & CSS</span><span>Đang rèn luyện</span></div><div class="track"><div class="fill" data-width="72%"></div></div></div>
-    <div class="skill"><div class="skill-top"><span>Python</span><span>Đang rèn luyện</span></div><div class="track"><div class="fill" data-width="58%"></div></div></div>
-    <div class="skill"><div class="skill-top"><span>Tư duy logic</span><span>Đang phát triển</span></div><div class="track"><div class="fill" data-width="64%"></div></div></div>
-    <div class="skill"><div class="skill-top"><span>Thuyết trình</span><span>Đang cải thiện</span></div><div class="track"><div class="fill" data-width="48%"></div></div></div>
-    <small style="color:var(--muted);display:block;margin-top:14px">Thanh tiến độ mang tính tự đánh giá và có thể chỉnh sửa theo thực tế.</small>
-   </div>
-  </div>
- </div>
+<div class="container">
+
+<!-- HỒ SƠ -->
+<section class="section reveal" id="profile">
+    <h2 class="section-title">01. Hồ sơ học tập</h2>
+    <p class="section-desc">
+        Một hành trình bắt đầu từ sự tò mò, được xây dựng
+        bằng kiến thức, kỷ luật và trải nghiệm.
+    </p>
+
+    <div class="grid">
+        <div class="card">
+            <div class="icon">🎓</div>
+            <h3>Đậu Đăng Hưng</h3>
+            <p>
+                Sinh viên năm nhất FPT Polytechnic.
+                Đang từng bước xây dựng nền tảng công nghệ,
+                tư duy logic và kỹ năng tự học.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="icon">🧠</div>
+            <h3>Tư duy phát triển</h3>
+            <p>
+                Không ngừng học hỏi, chủ động tìm hiểu,
+                biến kiến thức thành kỹ năng và biến ý tưởng
+                thành những sản phẩm thực tế.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="icon">🚀</div>
+            <h3>Định hướng</h3>
+            <p>
+                Tiếp cận trí tuệ nhân tạo, lập trình,
+                phân tích dữ liệu và phát triển những
+                ứng dụng có giá trị cho cộng đồng.
+            </p>
+        </div>
+    </div>
 </section>
 
-<section class="section alt" id="library">
- <div class="container">
-  <div class="section-head"><div><div class="kicker">02 / Knowledge hub</div><h2 class="section-title">Mục lục thư viện số</h2><p class="section-desc">Chọn một chủ đề để mở phần nội dung. Bạn có thể dùng ô tìm kiếm để lọc nhanh các thẻ bên dưới.</p></div>
-   <label class="search-wrap">🔎 <input id="searchInput" type="search" placeholder="Tìm tài liệu, chủ đề..." aria-label="Tìm kiếm thư viện"></label>
-  </div>
-  <div class="grid" id="libraryGrid">
-   <article class="card reveal" data-search="lap trinh html css javascript giao dien web"><div class="card-icon">💻</div><h3>Lập trình Web</h3><p>Ghi chú nền tảng HTML, CSS và JavaScript để xây dựng website có cấu trúc, giao diện đẹp và tương tác tốt.</p><a class="card-link" href="#web">Đọc nội dung →</a><div class="tag-row"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span></div></article>
-   <article class="card reveal" data-search="python lap trinh co ban bien vong lap ham"><div class="card-icon">🐍</div><h3>Python căn bản</h3><p>Tổng hợp biến, kiểu dữ liệu, câu điều kiện, vòng lặp, hàm và cách tư duy giải quyết bài toán.</p><a class="card-link" href="#python">Đọc nội dung →</a><div class="tag-row"><span class="tag">Biến</span><span class="tag">Vòng lặp</span><span class="tag">Hàm</span></div></article>
-   <article class="card reveal" data-search="java lap trinh huong doi tuong class object"><div class="card-icon">☕</div><h3>Java nhập môn</h3><p>Làm quen cú pháp Java, kiểu dữ liệu, lớp, đối tượng và tư duy lập trình hướng đối tượng.</p><a class="card-link" href="#java">Đọc nội dung →</a><div class="tag-row"><span class="tag">Java</span><span class="tag">OOP</span></div></article>
-   <article class="card reveal" data-search="tri tue nhan tao ai chatgpt gemini prompt"><div class="card-icon">🤖</div><h3>Trí tuệ nhân tạo</h3><p>Khám phá AI tạo sinh, cách viết câu lệnh hiệu quả và sử dụng công cụ AI có trách nhiệm.</p><a class="card-link" href="#ai">Đọc nội dung →</a><div class="tag-row"><span class="tag">AI</span><span class="tag">Prompt</span></div></article>
-   <article class="card reveal" data-search="ky nang mem giao tiep thuyet trinh lam viec nhom"><div class="card-icon">🎯</div><h3>Kỹ năng sinh viên</h3><p>Phương pháp học chủ động, giao tiếp, thuyết trình, làm việc nhóm và quản lý thời gian.</p><a class="card-link" href="#softskills">Đọc nội dung →</a><div class="tag-row"><span class="tag">Giao tiếp</span><span class="tag">Quản lý</span></div></article>
-   <article class="card reveal" data-search="tai lieu hoc tap ghi chu checklist phuong phap"><div class="card-icon">📚</div><h3>Góc tài liệu & ghi chú</h3><p>Khu vực lưu đường dẫn giáo trình, tài liệu tham khảo và ghi chú cá nhân theo từng môn học.</p><a class="card-link" href="#notes">Đọc nội dung →</a><div class="tag-row"><span class="tag">Tài liệu</span><span class="tag">Ghi chú</span></div></article>
-   <div class="no-results" id="noResults">Không tìm thấy mục phù hợp. Hãy thử từ khóa khác nhé!</div>
-  </div>
- </div>
+<!-- LỘ TRÌNH -->
+<section class="section reveal" id="roadmap">
+    <h2 class="section-title">02. Lộ trình phát triển</h2>
+    <p class="section-desc">
+        Kế hoạch xây dựng nền tảng và năng lực nghề nghiệp
+        theo từng giai đoạn.
+    </p>
+
+    <div class="timeline">
+        <div class="timeline-item">
+            <h3>Giai đoạn 1 — Nền móng</h3>
+            <p>
+                Tập trung vào Python, Java, HTML, CSS, Git,
+                tư duy thuật toán, tiếng Anh và kỹ năng học tập.
+                Hình thành thói quen ghi chép và thực hành mỗi ngày.
+            </p>
+        </div>
+
+        <div class="timeline-item">
+            <h3>Giai đoạn 2 — Khám phá chuyên sâu</h3>
+            <p>
+                Tìm hiểu toán học cho AI, thống kê, dữ liệu,
+                Machine Learning, thư viện NumPy, Pandas
+                và các công cụ xử lý dữ liệu.
+            </p>
+        </div>
+
+        <div class="timeline-item">
+            <h3>Giai đoạn 3 — Xây dựng sản phẩm</h3>
+            <p>
+                Thực hiện các dự án cá nhân, ứng dụng AI,
+                xây dựng portfolio, tham gia hoạt động nhóm
+                và thực hành giải quyết vấn đề thực tế.
+            </p>
+        </div>
+
+        <div class="timeline-item">
+            <h3>Giai đoạn 4 — Phát triển nghề nghiệp</h3>
+            <p>
+                Tìm kiếm cơ hội thực tập, phát triển chuyên môn,
+                nâng cao khả năng giao tiếp, xây dựng hồ sơ
+                nghề nghiệp và chuẩn bị cho công việc.
+            </p>
+        </div>
+    </div>
 </section>
 
-<section class="section" id="skills">
- <div class="container">
-  <div class="section-head"><div><div class="kicker">03 / Student toolkit</div><h2 class="section-title">Kỹ năng & phương pháp học</h2><p class="section-desc">Những thói quen nhỏ giúp hành trình học tập rõ ràng và bền vững hơn.</p></div></div>
-  <div class="grid">
-   <article class="card reveal"><div class="card-icon">🗓️</div><h3>Quản lý thời gian</h3><p>Chia công việc thành nhiệm vụ nhỏ, ưu tiên việc quan trọng và dành thời gian ôn tập đều đặn.</p></article>
-   <article class="card reveal"><div class="card-icon">🧩</div><h3>Tư duy giải quyết vấn đề</h3><p>Phân tích yêu cầu, xác định dữ liệu đầu vào, thiết kế từng bước và kiểm thử kết quả.</p></article>
-   <article class="card reveal"><div class="card-icon">🤝</div><h3>Làm việc nhóm</h3><p>Thống nhất mục tiêu, phân chia vai trò, cập nhật tiến độ và tôn trọng ý kiến của các thành viên.</p></article>
-  </div>
- </div>
+<!-- AI -->
+<section class="section reveal" id="ai">
+    <h2 class="section-title">03. AI & Machine Learning</h2>
+    <p class="section-desc">
+        Kho kiến thức nền tảng về trí tuệ nhân tạo
+        và những công nghệ đang định hình tương lai.
+    </p>
+
+    <div class="grid">
+        <div class="card">
+            <div class="icon">🤖</div>
+            <h3>Artificial Intelligence</h3>
+            <p>
+                AI là lĩnh vực nghiên cứu và phát triển
+                hệ thống có khả năng thực hiện các nhiệm vụ
+                thường đòi hỏi trí thông minh của con người.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="icon">📊</div>
+            <h3>Machine Learning</h3>
+            <p>
+                ML cho phép máy tính tìm ra quy luật từ dữ liệu
+                và cải thiện khả năng dự đoán hoặc quyết định
+                mà không cần lập trình từng quy tắc cụ thể.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="icon">🧬</div>
+            <h3>Deep Learning</h3>
+            <p>
+                DL sử dụng mạng nơ-ron nhiều tầng để học
+                những biểu diễn phức tạp từ dữ liệu như
+                hình ảnh, văn bản và âm thanh.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="icon">💬</div>
+            <h3>Generative AI</h3>
+            <p>
+                Tìm hiểu các mô hình tạo văn bản, hình ảnh,
+                âm thanh, code và cách sử dụng AI
+                có trách nhiệm.
+            </p>
+        </div>
+    </div>
 </section>
 
-<section class="section alt" id="topics">
- <div class="container">
-  <div class="section-head"><div><div class="kicker">04 / Learning notes</div><h2 class="section-title">Nội dung học tập tiêu biểu</h2><p class="section-desc">Các ghi chú ngắn để bắt đầu ôn tập và mở rộng kiến thức.</p></div></div>
-  <div class="grid">
-   <article class="card reveal" id="web"><div class="card-icon">🌐</div><h3>HTML, CSS & JavaScript</h3><p><b>HTML</b> tạo cấu trúc nội dung; <b>CSS</b> định dạng giao diện; <b>JavaScript</b> bổ sung hành vi tương tác. Ba công nghệ phối hợp để tạo nên website hiện đại.</p><div class="tag-row"><span class="tag">Cấu trúc</span><span class="tag">Giao diện</span><span class="tag">Tương tác</span></div></article>
-   <article class="card reveal" id="python"><div class="card-icon">🐍</div><h3>Python căn bản</h3><p>Python có cú pháp dễ đọc. Người mới học nên bắt đầu từ <code>print()</code>, biến, <code>if</code>, <code>for</code>, <code>while</code> và hàm <code>def</code>. Hãy luyện tập bằng bài toán nhỏ mỗi ngày.</p><div class="tag-row"><span class="tag">Cú pháp</span><span class="tag">Thực hành</span></div></article>
-   <article class="card reveal" id="java"><div class="card-icon">☕</div><h3>Java nhập môn</h3><p>Java là ngôn ngữ lập trình hướng đối tượng. Các khái niệm cần nắm gồm biến, kiểu dữ liệu, câu lệnh điều khiển, class, object và phương thức.</p><div class="tag-row"><span class="tag">Class</span><span class="tag">Object</span><span class="tag">Method</span></div></article>
-   <article class="card reveal" id="ai"><div class="card-icon">🧠</div><h3>AI trong học tập</h3><p>AI có thể hỗ trợ giải thích khái niệm, gợi ý ý tưởng và phản hồi bản nháp. Cần kiểm chứng thông tin, bảo vệ dữ liệu cá nhân và tự hiểu nội dung trước khi sử dụng.</p><div class="tag-row"><span class="tag">ChatGPT</span><span class="tag">Gemini</span><span class="tag">Đạo đức AI</span></div></article>
-   <article class="card reveal" id="softskills"><div class="card-icon">🎤</div><h3>Kỹ năng mềm</h3><p>Để thuyết trình tốt, hãy xác định một thông điệp chính, sắp xếp ý theo mở đầu – nội dung – kết luận, luyện nói và kiểm soát thời gian.</p><div class="tag-row"><span class="tag">Thuyết trình</span><span class="tag">Giao tiếp</span></div></article>
-   <article class="card reveal" id="notes"><div class="card-icon">📝</div><h3>Tài liệu & ghi chú</h3><p>Gợi ý tổ chức: tạo thư mục theo học kỳ và môn học; đặt tên tệp nhất quán; ghi nguồn tham khảo; sao lưu tài liệu định kỳ.</p><div class="tag-row"><span class="tag">Tổ chức</span><span class="tag">Lưu trữ</span></div></article>
-  </div>
- </div>
+<!-- LẬP TRÌNH -->
+<section class="section reveal" id="programming">
+    <h2 class="section-title">04. Programming Lab</h2>
+    <p class="section-desc">
+        Nơi lưu trữ các ngôn ngữ, kiến thức lập trình
+        và kỹ thuật giải quyết vấn đề.
+    </p>
+
+    <div class="grid">
+        <div class="card">
+            <div class="icon">🐍</div>
+            <h3>Python</h3>
+            <ul>
+                <li>Biến và kiểu dữ liệu</li>
+                <li>Điều kiện và vòng lặp</li>
+                <li>Hàm và cấu trúc dữ liệu</li>
+                <li>OOP</li>
+                <li>NumPy và Pandas</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <div class="icon">☕</div>
+            <h3>Java</h3>
+            <ul>
+                <li>Biến và toán tử</li>
+                <li>Vòng lặp</li>
+                <li>Mảng</li>
+                <li>Class và Object</li>
+                <li>OOP</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <div class="icon">⚙️</div>
+            <h3>C++</h3>
+            <ul>
+                <li>Cấu trúc chương trình</li>
+                <li>Thuật toán</li>
+                <li>Con trỏ</li>
+                <li>Cấu trúc dữ liệu</li>
+                <li>Giải quyết bài toán</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <div class="icon">🌐</div>
+            <h3>Web Development</h3>
+            <ul>
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+                <li>Responsive Design</li>
+                <li>GitHub</li>
+            </ul>
+        </div>
+    </div>
 </section>
 
-<section class="section" id="projects">
- <div class="container">
-  <div class="section-head"><div><div class="kicker">05 / My projects</div><h2 class="section-title">Dự án & cột mốc</h2><p class="section-desc">Nhật ký phát triển năng lực qua từng bài tập và sản phẩm nhỏ.</p></div></div>
-  <div class="about-grid">
-   <div class="about-panel reveal"><h3>Hành trình học tập</h3><div class="timeline" style="margin-top:22px">
-    <div class="timeline-item"><small>GIAI ĐOẠN 01 • LÀM QUEN</small><h3>Nền tảng công nghệ</h3><p>Tìm hiểu máy tính, Internet, công cụ học tập và cách quản lý tài liệu số.</p></div>
-    <div class="timeline-item"><small>GIAI ĐOẠN 02 • THỰC HÀNH</small><h3>Bắt đầu lập trình</h3><p>Viết chương trình cơ bản, xây dựng trang web đầu tiên và luyện tư duy thuật toán.</p></div>
-    <div class="timeline-item"><small>GIAI ĐOẠN 03 • PHÁT TRIỂN</small><h3>Hoàn thiện sản phẩm</h3><p>Tiếp tục cập nhật dự án, nhận góp ý và cải thiện chất lượng sản phẩm.</p></div>
-   </div></div>
-   <div class="quote reveal">“Không cần phải giỏi ngay từ đầu. Chỉ cần hôm nay tốt hơn hôm qua một chút.”<small>— Ghi chú động lực của Thành Long</small></div>
-  </div>
- </div>
+<!-- DỰ ÁN -->
+<section class="section reveal" id="projects">
+    <h2 class="section-title">05. Project Archive</h2>
+    <p class="section-desc">
+        Mỗi dự án là một lần thử nghiệm, một bài học
+        và một bước tiến trong hành trình phát triển.
+    </p>
+
+    <div class="grid">
+        <div class="card">
+            <div class="icon">📚</div>
+            <h3>Digital Library</h3>
+            <p>
+                Xây dựng website quản lý kiến thức cá nhân
+                với các mục lục, tài liệu và giao diện tương tác.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="icon">📝</div>
+            <h3>Task Manager</h3>
+            <p>
+                Viết chương trình quản lý công việc bằng Python,
+                hỗ trợ thêm, xem và theo dõi nhiệm vụ.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="icon">📈</div>
+            <h3>Data Analysis</h3>
+            <p>
+                Thực hành thu thập, làm sạch,
+                phân tích và trực quan hóa dữ liệu.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="icon">🤖</div>
+            <h3>AI Experiment</h3>
+            <p>
+                Thử nghiệm các mô hình học máy đơn giản,
+                phân loại dữ liệu và đánh giá kết quả.
+            </p>
+        </div>
+    </div>
 </section>
 
-<section class="section alt" id="contact">
- <div class="container">
-  <div class="contact-box reveal"><div><div class="kicker">06 / Keep in touch</div><h2 class="section-title">Cùng học hỏi và phát triển!</h2><p class="section-desc">Cảm ơn bạn đã ghé thăm thư viện số cá nhân của mình.</p></div><a class="btn primary" href="#home">Trở về đầu trang ↑</a></div>
- </div>
+<!-- TÀI NGUYÊN -->
+<section class="section reveal" id="resources">
+    <h2 class="section-title">06. Knowledge Resources</h2>
+    <p class="section-desc">
+        Những nguồn tài liệu hỗ trợ việc học,
+        nghiên cứu và tự phát triển.
+    </p>
+
+    <div class="grid">
+        <div class="card resource">
+            <div class="icon">🐍</div>
+            <h3>Python</h3>
+            <p>Học Python từ tài liệu chính thức.</p>
+            <a href="https://docs.python.org/3/tutorial/"
+               target="_blank" rel="noopener">
+                Khám phá →
+            </a>
+        </div>
+
+        <div class="card resource">
+            <div class="icon">🧠</div>
+            <h3>Machine Learning</h3>
+            <p>Tìm hiểu nền tảng Machine Learning.</p>
+            <a href="https://www.coursera.org/learn/machine-learning"
+               target="_blank" rel="noopener">
+                Khám phá →
+            </a>
+        </div>
+
+        <div class="card resource">
+            <div class="icon">💻</div>
+            <h3>GitHub</h3>
+            <p>Lưu trữ code và xây dựng portfolio.</p>
+            <a href="https://github.com/"
+               target="_blank" rel="noopener">
+                Khám phá →
+            </a>
+        </div>
+
+        <div class="card resource">
+            <div class="icon">📖</div>
+            <h3>W3Schools</h3>
+            <p>Học HTML, CSS, JavaScript và Python.</p>
+            <a href="https://www.w3schools.com/"
+               target="_blank" rel="noopener">
+                Khám phá →
+            </a>
+        </div>
+
+        <div class="card resource">
+            <div class="icon">🎓</div>
+            <h3>freeCodeCamp</h3>
+            <p>Học lập trình và thực hành miễn phí.</p>
+            <a href="https://www.freecodecamp.org/"
+               target="_blank" rel="noopener">
+                Khám phá →
+            </a>
+        </div>
+
+        <div class="card resource">
+            <div class="icon">🔬</div>
+            <h3>Kaggle</h3>
+            <p>Thực hành dữ liệu và Machine Learning.</p>
+            <a href="https://www.kaggle.com/"
+               target="_blank" rel="noopener">
+                Khám phá →
+            </a>
+        </div>
+    </div>
 </section>
-</main>
-<footer><div class="container">© 2026 Đỗ Thành Long • MSSV: PK04904 • Thư viện số cá nhân | Được xây dựng bằng HTML, CSS & JavaScript.</div></footer>
-<button id="topBtn" aria-label="Lên đầu trang">↑</button>
+
+<!-- MỤC TIÊU -->
+<section class="section reveal" id="goals">
+    <h2 class="section-title">07. Personal Growth</h2>
+    <p class="section-desc">
+        Hệ thống mục tiêu giúp định hướng hành động
+        và duy trì sự tiến bộ lâu dài.
+    </p>
+
+    <div class="grid">
+        <div class="card">
+            <div class="icon">📅</div>
+            <h3>Kỷ luật</h3>
+            <p>
+                Học mỗi ngày, hạn chế trì hoãn,
+                duy trì thói quen thực hành
+                và hoàn thành nhiệm vụ.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="icon">📚</div>
+            <h3>Tri thức</h3>
+            <p>
+                Đọc sách, học tiếng Anh,
+                nghiên cứu công nghệ
+                và mở rộng tư duy.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="icon">🏆</div>
+            <h3>Thành tựu</h3>
+            <p>
+                Hoàn thành các dự án thực tế,
+                xây dựng portfolio
+                và phát triển kỹ năng chuyên môn.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="section reveal">
+    <div class="quote">
+        <h2>“Không cần trở thành người giỏi nhất hôm nay.
+        Chỉ cần không ngừng tiến bộ so với chính mình hôm qua.”</h2>
+
+        <p style="margin-top:20px;">
+            Hành trình của Đậu Đăng Hưng —
+            bắt đầu từ những dòng code đầu tiên,
+            hướng đến một tương lai được xây dựng bằng tri thức.
+        </p>
+    </div>
+</section>
+
+</div>
+
+<footer>
+    <p>© 2026 Digital Library | Đậu Đăng Hưng</p>
+    <p style="margin-top:10px;">
+        Built with curiosity, discipline and technology.
+    </p>
+</footer>
+
 <script>
-const body=document.body,themeBtn=document.getElementById('themeBtn');
-const savedTheme=localStorage.getItem('long-library-theme');
-if(savedTheme==='dark'){body.classList.add('dark');themeBtn.textContent='☀️'}
-themeBtn.addEventListener('click',()=>{
- body.classList.toggle('dark');
- const dark=body.classList.contains('dark');
- themeBtn.textContent=dark?'☀️':'🌙';
- localStorage.setItem('long-library-theme',dark?'dark':'light');
+// CHUYỂN ĐỔI SÁNG / TỐI
+const themeBtn = document.getElementById("themeBtn");
+
+themeBtn.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+
+    const isDark = document.body.classList.contains("dark");
+
+    themeBtn.textContent = isDark
+        ? "☀️ Chế độ sáng"
+        : "🌙 Chế độ tối";
 });
-const menuBtn=document.getElementById('menuBtn'),nav=document.getElementById('navLinks');
-menuBtn.addEventListener('click',()=>nav.classList.toggle('open'));
-nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
-const observer=new IntersectionObserver(entries=>{
- entries.forEach(entry=>{
-  if(entry.isIntersecting){
-   entry.target.classList.add('visible');
-   entry.target.querySelectorAll?.('.fill').forEach(bar=>bar.style.width=bar.dataset.width);
-   observer.unobserve(entry.target);
-  }
- });
-},{threshold:.12});
-document.querySelectorAll('.reveal,.about-panel').forEach(el=>observer.observe(el));
-const search=document.getElementById('searchInput'),cards=[...document.querySelectorAll('#libraryGrid .card')],noResults=document.getElementById('noResults');
-search.addEventListener('input',()=>{
- const q=search.value.toLocaleLowerCase('vi').trim();let shown=0;
- cards.forEach(card=>{const match=(card.innerText+' '+card.dataset.search).toLocaleLowerCase('vi').includes(q);card.style.display=match?'':'none';if(match)shown++});
- noResults.style.display=shown?'none':'block';
+
+// HIỆU ỨNG HIỆN NỘI DUNG
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+        }
+    });
+}, { threshold: 0.15 });
+
+document.querySelectorAll(".reveal").forEach(section => {
+    observer.observe(section);
 });
-const topBtn=document.getElementById('topBtn');
-window.addEventListener('scroll',()=>topBtn.classList.toggle('show',window.scrollY>450));
-topBtn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+// THANH TIẾN ĐỘ CUỘN
+window.addEventListener("scroll", () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight
+                    - window.innerHeight;
+
+    const progress = docHeight > 0
+        ? (scrollTop / docHeight) * 100
+        : 0;
+
+    document.getElementById("progressBar")
+        .style.width = progress + "%";
+});
 </script>
+
 </body>
 </html>
